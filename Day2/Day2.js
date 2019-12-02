@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const input = () => fs.readFileSync('input', 'utf8').split(',');
+const input = () => fs.readFileSync('Day2/input', 'utf8').split(',');
 // Day 2
 
 const param = (() => {
