@@ -16,12 +16,15 @@ const singleModuleFuel = (singleVal) => (
     Math.floor(Number(singleVal) /  param.DIVIDER) - param.SUBTRACT
     );
 
-const totalFuel = (input) => input.reduce((acc, oneValue) => (
-    acc + singleModuleFuel(oneValue)
+const additionFuel = (fuelMass) => {
+    if (fuelMass < 0) return 0;
+    return fuelMass + additionFuel(Math.floor(fuelMass /  param.DIVIDER) - param.SUBTRACT); 
+}
+
+const totalFuel = (input, extraFuel) => input.reduce((acc, oneValue) => (
+    acc + extraFuel(singleModuleFuel(oneValue))
     ),0
 )
 
-
-
-console.log(totalFuel(input()));
+console.log(totalFuel(input(), additionFuel));
 
