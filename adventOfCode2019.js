@@ -1,30 +1,69 @@
 const fs = require('fs');
 
-const input = () => fs.readFileSync('input', 'utf8').split('\n');
-// Day 1 
+const input = () => fs.readFileSync('input', 'utf8').split(',');
+// Day 2
+
 const param = (() => {
-    const DIVIDER = 3;
-    const SUBTRACT = 2;
+    const firstPos = 1;
+    const secondPos = 2;
+    const thirdPos = 3;
+    const halt = 99;
+
+    const gravityNum = 19690720;
+
+    const steps = 4;
     
     return {
-        DIVIDER,
-        SUBTRACT
+        firstPos,
+        secondPos,
+        thirdPos,
+        steps,
+        halt,
+        gravityNum,
     }
 })()
 
-const singleModuleFuel = (singleVal) => (
-    Math.floor(Number(singleVal) /  param.DIVIDER) - param.SUBTRACT
-    );
-
-const additionFuel = (fuelMass) => {
-    if (fuelMass < 0) return 0;
-    return fuelMass + additionFuel(Math.floor(fuelMass /  param.DIVIDER) - param.SUBTRACT); 
+const opCodeOne = (intCode, initPos) => {
+        intCode[intCode[initPos + param.thirdPos]] 
+         = intCode[intCode[initPos + param.firstPos]] 
+         + intCode[intCode[initPos + param.secondPos]]
+    return intCode;
 }
 
-const totalFuel = (input, extraFuel) => input.reduce((acc, oneValue) => (
-    acc + extraFuel(singleModuleFuel(oneValue))
-    ),0
-)
+const opCodeTwo = (intCode, initPos) => {
+        intCode[intCode[initPos + param.thirdPos]]
+         = intCode[intCode[initPos + param.firstPos]] 
+         * intCode[intCode[initPos + param.secondPos]]
+    return intCode;
+}
 
-console.log(totalFuel(input(), additionFuel));
+const calculateCode = (caseWhenOne, caseWhenTwo, integerCode) => {
+    let initVal = 0;
+    const intCode = integerCode.map(val => Number(val));
+
+    while(initVal < intCode.length) {
+
+        if (intCode[initVal] === 1) {
+            caseWhenOne(intCode, initVal);
+            initVal += param.steps;
+        }
+
+        if (intCode[initVal] === 2) {
+            caseWhenTwo(intCode, initVal);
+            initVal += param.steps;
+        }
+
+        if (intCode[initVal] === param.halt) break;
+    }
+
+     return intCode.join(',');
+}
+
+const gravityNum = ()
+
+console.log(calculateCode(opCodeOne, opCodeTwo, input()));
+
+
+
+// console.log(input);
 
