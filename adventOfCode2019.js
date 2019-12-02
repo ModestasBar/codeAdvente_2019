@@ -23,7 +23,7 @@ const param = (() => {
     }
 })()
 
-const opCodeOne = (intCode, initPos) => {
+const opCodeOne = (intCode, initPos, ) => {
         intCode[intCode[initPos + param.thirdPos]] 
          = intCode[intCode[initPos + param.firstPos]] 
          + intCode[intCode[initPos + param.secondPos]]
@@ -59,7 +59,6 @@ const calculateCode = (caseWhenOne, caseWhenTwo, integerCode) => {
      return intCode.join(',');
 }
 
-const gravityNum = ()
 
 console.log(calculateCode(opCodeOne, opCodeTwo, input()));
 
